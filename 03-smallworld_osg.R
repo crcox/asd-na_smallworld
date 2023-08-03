@@ -16,7 +16,7 @@ library(igraph)
 pos_counts <- readRDS(file = pos_counts_path)[subject_id, ]
 vocab_vids <- readRDS(file = vocab_vid_path)[[subject_id]]
 g <- igraph::upgrade_graph(readRDS(file = network_path))
-m <- readRDS(file = metadata_path)
+m <- readRDS(file = meta_path)
 
 print(pos_counts)
 n <- unlist(pos_counts[c("noun", "verb", "other")])
