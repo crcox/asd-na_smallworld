@@ -1,0 +1,28 @@
++SingularityImage = "osdf:///ospool/ap20/data/chriscox/containers/R4_0_1-boot.sif"
+
+x = $(Process) + 1
+subject_id_zp = $INT(x,%03d)
+
+subject_id = $INT(x,%d)
+niter = 1000
+network_path = child_net_graph.rds
+vocab_vid_path = asd_na-osg-2023_06_30-vocab_vid.rds
+pos_counts_path = asd_na-osg-2023_06_30-pos_counts.rds
+meta_path = cdi-metadata-pos_vid.rds
+
+executable = 03-smallworld_osg.sh
+arguments = $(subject_id) 1000 $(network_path) $(vocab_vid_path) $(pos_counts_path) $(meta_path)
+
+log    = log/log.$(Cluster).$(Process)
+error  = log/err.$(Cluster).$(Process)
+output = log/out.$(Cluster).$(Process)
+
++JobDurationCategory = "Medium"
+
+transfer_input_files = 03-smallworld_osg.R, data/$(network_path), data/$(vocab_vid_path), data/$(pos_counts_path), data/$(meta_path)
+
+request_cpus   = 1
+request_memory = 4GB
+request_disk   = 12GB
+
+queue 1248
