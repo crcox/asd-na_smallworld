@@ -1,4 +1,4 @@
-+SingularityImage = "osdf:///ospool/ap20/data/chriscox/containers/R4_0_1-boot.sif"
++SingularityImage = "osdf:///ospool/ap20/data/chriscox/containers/R4_0_2-igraph.sif"
 
 x = $(Process) + 1
 subject_id_zp = $INT(x,%03d)
