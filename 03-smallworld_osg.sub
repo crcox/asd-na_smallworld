@@ -18,7 +18,7 @@ output = log/out.$(Cluster).$(Process)
 
 +JobDurationCategory = "Medium"
 
-transfer_input_files = 03-smallworld_osg.R, data/$(network_path), data/$(vocab_vid_path), data/$(pos_counts_path), data/$(meta_path)
+transfer_input_files = 03-smallworld_osg.R, R/swi.R, R/ran.R, network/$(network_path), data/$(vocab_vid_path), data/$(pos_counts_path), data/$(meta_path)
 
 request_cpus   = 1
 request_memory = 4GB
