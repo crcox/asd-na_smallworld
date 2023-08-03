@@ -28,4 +28,4 @@ results <- list(
     ran = replicate(niter, swi(balanced_ran(g, n, m$pos)), simplify = TRUE)
 )
 
-saveRDS(results, file = sprintf("%03d_smallworld.rds", subject_id))
+saveRDS(results, file = sprintf("%04d_smallworld.rds", subject_id))
