@@ -12,6 +12,8 @@ meta_path <- args[6]
 str(list(subject_id, niter, network_path, vocab_vid_path, pos_counts_path, meta_path))
 
 library(igraph)
+source("swi.R")
+source("ran.R")
 
 pos_counts <- readRDS(file = pos_counts_path)[subject_id, ]
 vocab_vids <- readRDS(file = vocab_vid_path)[[subject_id]]
