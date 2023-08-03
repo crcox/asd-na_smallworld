@@ -1,4 +1,4 @@
-library(dplyr)
+library(assertthat)
 library(igraph)
 
 #' Sample from lexical-semantic environment balanced over parts of speech
