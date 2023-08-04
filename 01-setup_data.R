@@ -3,8 +3,14 @@ library(purrr)
 library(igraph)
 library(tidyr)
 
-source("R/ran.R")
-source("R/swi.R")
+part_of_speech <- function(categories) {
+    noun_cat <- c("animals", "vehicles", "toys", "people", "places", "food_drink",
+                  "clothing", "body_parts", "household", "furniture_rooms",
+                  "outside")
+    verb_cat <- c("action_words")
+    return(ifelse(categories %in% noun_cat, "noun",
+                  ifelse(categories %in% verb_cat, "verb", "other")))
+}
 
 d <- readRDS(file = "data/asd_na-osg-2023_06_30.rds")
 g <- upgrade_graph(readRDS(file = "network/child_net_graph.rds"))
@@ -29,7 +35,8 @@ pos_counts <- d_vid %>%
     pivot_wider(
         id_cols = c(group, subjectkey),
         names_from = pos,
-        values_from = n
+        values_from = n,
+        values_fill = 0
     )
 
 vocab_vid <- d_vid %>%
