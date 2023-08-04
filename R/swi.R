@@ -68,9 +68,9 @@ swi <- function(g, iter = 100, methods = c("index", "propensity", "telesford"), 
     Glatt <- replicate(iter, make_ring_with_degree(nv, target_degree))
 
     if (local_clust) {
-        Cobs <- mean(igraph::transitivity(g, type = "local"))
-        Crand <- mean(vapply(Grand, igraph::transitivity, numeric(nv), type = "local"))
-        Clatt <- mean(vapply(Glatt, igraph::transitivity, numeric(nv), type = "local"))
+        Cobs <- mean(igraph::transitivity(g, type = "local", isolates = "zero"))
+        Crand <- mean(vapply(Grand, igraph::transitivity, numeric(nv), type = "local", isolates = "zero"))
+        Clatt <- mean(vapply(Glatt, igraph::transitivity, numeric(nv), type = "local", isolates = "zero"))
     } else {
         Cobs <- igraph::transitivity(g, type = "global")
         Crand <- mean(vapply(Grand, igraph::transitivity, numeric(1), type = "global"))
