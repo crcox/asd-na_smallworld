@@ -59,7 +59,7 @@
 #' Hills, T. (XXXX). Network Science Book.
 #'
 #' @export
-swi <- function(g, iter = 100, methods = c("index", "propensity", "telesford"), local_clust = TRUE) {
+swi <- function(g, iter = 100, methods = c("index", "propensity", "telesford"), local_clust = TRUE, truncate_delta = TRUE) {
     nv <- igraph::vcount(g)
     ne <- igraph::ecount(g)
     target_degree <- mean(degree(g))
@@ -81,13 +81,17 @@ swi <- function(g, iter = 100, methods = c("index", "propensity", "telesford"), 
     Lrand <- mean(vapply(Grand, igraph::mean_distance, numeric(1)))
     Llatt <- mean(vapply(Glatt, igraph::mean_distance, numeric(1)))
 
-    vapply(methods, function(x) {
-        switch(x,
-               index = sw_index(Cobs, Lobs, Crand, Lrand),
-               propensity = sw_propensity(Cobs, Lobs, Crand, Lrand, Clatt, Llatt),
-               telesford = sw_telesford(Cobs, Lobs, Crand, Lrand, Clatt, Llatt)
-        )
-    }, FUN.VALUE = numeric(1), USE.NAMES = TRUE)
+    if (methods == "propensity") {
+       return(sw_propensity(Cobs, Lobs, Crand, Lrand, Clatt, Llatt, truncate_delta))
+    } else {
+        vapply(methods, function(x) {
+            switch(x,
+                   index = sw_index(Cobs, Lobs, Crand, Lrand),
+                   propensity = sw_propensity(Cobs, Lobs, Crand, Lrand, Clatt, Llatt, truncate_delta),
+                   telesford = sw_telesford(Cobs, Lobs, Crand, Lrand, Clatt, Llatt)
+            )
+        }, FUN.VALUE = numeric(1), USE.NAMES = TRUE)
+    }
 }
 
 make_ring_with_degree <- function(nv, target_degree) {
@@ -105,10 +109,18 @@ sw_index <- function(Cobs, Lobs, Crand, Lrand) {
     return((Cobs / Crand) * (Lrand / Lobs))
 }
 
-sw_propensity <- function(Cobs, Lobs, Crand, Lrand, Clatt, Llatt) {
-    deltaC <- (Clatt - Cobs) / (Clatt - Crand)
-    deltaL <- (Lobs - Lrand) / (Llatt - Lrand)
-    return(1 - sqrt((deltaC^2 + deltaL^2) / 2))
+sw_propensity <- function(Cobs, Lobs, Crand, Lrand, Clatt, Llatt, truncate_delta = TRUE) {
+    deltaC_orig <- (Clatt - Cobs) / (Clatt - Crand)
+    deltaL_orig <- (Lobs - Lrand) / (Llatt - Lrand)
+    if (truncate_delta) {
+        deltaC <- pmin(pmax(deltaC_orig, 0), 1)
+        deltaL <- pmin(pmax(deltaL_orig, 0), 1)
+    } else {
+        deltaC <- deltaC_orig
+        deltaL <- deltaL_orig
+    }
+    swp <- 1 - sqrt((deltaC^2 + deltaL^2) / 2)
+    return(c("swp" = swp, "deltaC" = deltaC_orig, "deltaL" = deltaL_orig))
 }
 
 sw_telesford <- function(Cobs, Lobs, Crand, Lrand, Clatt, Llatt) {
