@@ -12,7 +12,7 @@ part_of_speech <- function(categories) {
                   ifelse(categories %in% verb_cat, "verb", "other")))
 }
 
-d <- readRDS(file = "data/asd_na-osg-2023_06_30.rds")
+d <- readRDS(file = "data/asd_na-osg-2023_08_14.rds")
 g <- upgrade_graph(readRDS(file = "network/child_net_graph.rds"))
 v <- data.frame(vid = seq_len(igraph::vcount(g)), word = names(igraph::V(g)))
 m <- readRDS(file = "data/cdi-metadata.rds") %>%
@@ -45,6 +45,6 @@ vocab_vid <- d_vid %>%
     group_split() %>%
     map(~{pull(.x, vid)})
 
-saveRDS(pos_counts, file = "data/asd_na-osg-2023_06_30-pos_counts.rds")
-saveRDS(vocab_vid, file = "data/asd_na-osg-2023_06_30-vocab_vid.rds")
+saveRDS(pos_counts, file = "data/asd_na-osg-2023_08_14-pos_counts.rds")
+saveRDS(vocab_vid, file = "data/asd_na-osg-2023_08_14-vocab_vid.rds")
 saveRDS(m, file = "data/cdi-metadata-pos_vid.rds")
