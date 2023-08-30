@@ -87,7 +87,7 @@ swi <- function(g, iter = 100, methods = c("index", "propensity", "telesford"), 
         vapply(methods, function(x) {
             switch(x,
                    index = sw_index(Cobs, Lobs, Crand, Lrand),
-                   propensity = sw_propensity(Cobs, Lobs, Crand, Lrand, Clatt, Llatt, truncate_delta),
+                   propensity = sw_propensity(Cobs, Lobs, Crand, Lrand, Clatt, Llatt, truncate_delta)[1],
                    telesford = sw_telesford(Cobs, Lobs, Crand, Lrand, Clatt, Llatt)
             )
         }, FUN.VALUE = numeric(1), USE.NAMES = TRUE)
