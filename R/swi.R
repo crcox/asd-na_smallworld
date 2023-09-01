@@ -81,7 +81,7 @@ swi <- function(g, iter = 100, methods = c("index", "propensity", "telesford"), 
     Lrand <- mean(vapply(Grand, igraph::mean_distance, numeric(1)))
     Llatt <- mean(vapply(Glatt, igraph::mean_distance, numeric(1)))
 
-    if (methods == "propensity") {
+    if (length(methods) == 1 && methods == "propensity") {
        return(sw_propensity(Cobs, Lobs, Crand, Lrand, Clatt, Llatt, truncate_delta))
     } else {
         vapply(methods, function(x) {
@@ -119,8 +119,8 @@ sw_propensity <- function(Cobs, Lobs, Crand, Lrand, Clatt, Llatt, truncate_delta
         deltaC <- deltaC_orig
         deltaL <- deltaL_orig
     }
-    swp <- 1 - sqrt((deltaC^2 + deltaL^2) / 2)
-    return(c("swp" = swp, "deltaC" = deltaC_orig, "deltaL" = deltaL_orig))
+    return(1 - sqrt((deltaC^2 + deltaL^2) / 2))
+    #return(c("swp" = swp, "deltaC" = deltaC_orig, "deltaL" = deltaL_orig))
 }
 
 sw_telesford <- function(Cobs, Lobs, Crand, Lrand, Clatt, Llatt) {
