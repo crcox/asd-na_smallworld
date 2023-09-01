@@ -4,7 +4,7 @@ library(tidyr)
 library(igraph)
 library(ggplot2)
 
-pos_counts <- readRDS("data/asd_na-osg-2023_06_30-pos_counts.rds")
+pos_counts <- readRDS("data/asd_na-osg-2023_08_14-pos_counts.rds")
 
 swi_list <- map(seq_len(nrow(pos_counts)), ~{
     p <- file.path("results", sprintf("%04d_smallworld.rds", .x))

@@ -5,8 +5,8 @@ x = $(Process) + 1
 subject_id = $INT(x,%d)
 niter = 1000
 network_path = child_net_graph.rds
-vocab_vid_path = asd_na-osg-2023_06_30-vocab_vid.rds
-pos_counts_path = asd_na-osg-2023_06_30-pos_counts.rds
+vocab_vid_path = asd_na-osg-2023_08_14-vocab_vid.rds
+pos_counts_path = asd_na-osg-2023_08_14-pos_counts.rds
 meta_path = cdi-metadata-pos_vid.rds
 
 executable = 03-smallworld_osg.sh
