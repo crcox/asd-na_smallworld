@@ -119,8 +119,8 @@ sw_propensity <- function(Cobs, Lobs, Crand, Lrand, Clatt, Llatt, truncate_delta
         deltaC <- deltaC_orig
         deltaL <- deltaL_orig
     }
-    return(1 - sqrt((deltaC^2 + deltaL^2) / 2))
-    #return(c("swp" = swp, "deltaC" = deltaC_orig, "deltaL" = deltaL_orig))
+    swp <- 1 - sqrt((deltaC^2 + deltaL^2) / 2)
+    return(c("swp" = swp, "deltaC" = deltaC_orig, "deltaL" = deltaL_orig))
 }
 
 sw_telesford <- function(Cobs, Lobs, Crand, Lrand, Clatt, Llatt) {
