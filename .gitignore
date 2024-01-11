@@ -6,3 +6,5 @@ data/
 log/
 network/
 results/
+trash/
+*.rds
