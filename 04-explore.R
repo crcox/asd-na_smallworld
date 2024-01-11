@@ -6,7 +6,7 @@ library(ggplot2)
 
 meta <- readRDS("data/cdi-metadata-pos_vid.rds")
 n_pos <- table(meta$pos)
-pos_counts <- readRDS("data/asd_na-osg-2023_08_14-pos_counts.rds") %>%
+pos_counts <- readRDS("data/asd_na-osg-2024_01_05-pos_counts.rds") %>%
     mutate(
         nproduced = noun + verb + other,
         p_noun = noun / n_pos["noun"],
@@ -60,10 +60,10 @@ ggsave(filename = "pos_by_group.pdf", width = 11, height = 8, units = "in", dpi 
 ggsave(filename = "pos_by_group.png", width = 11, height = 8, units = "in", dpi = 300)
 
 swi_list <- map(seq_len(nrow(pos_counts)), ~{
-    p <- file.path("results", "20230814", sprintf("%04d_smallworld.rds", .x))
+    p <- file.path("results", "asd-na_smallworld_2024_01_05", sprintf("%04d_smallworld_2024_01_05.rds", .x))
     readRDS(p)
 })
-swi_list <- readRDS("results/sw_p_t.rds")
+swi_list <- readRDS("results/sw_p_t_2024_01_05.rds")
 
 swi_df <- map(swi_list, ~{
     ran_mean <- rowMeans(.x$ran, na.rm = TRUE)
